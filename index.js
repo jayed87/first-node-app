@@ -17,7 +17,15 @@ app.get('/', (req, res) => {
     res.send('Hello from the otherside and');
 })
 app.get('/users', (req, res) => {
-    res.send(users);
+    const search = req.query.search;
+    if (search) {
+        const searchResult = users.filter(user => user.name.toLowerCase().includes(search));
+        res.send(searchResult);
+    }
+    else {
+        res.send(users);
+    }
+
 })
 app.get('/users/:id', (req, res) => {
     const id = req.params.id;

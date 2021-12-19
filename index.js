@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(cors());
+app.use(express.json());
 // const handler = (req, res)=>{
 //     res.send('Hello form node');
 // }
@@ -13,7 +14,14 @@ const users = [
     { id: 2, name: "borhan" },
     { id: 3, name: "rakesh" }
 ]
-
+app.post('/users', (req, res) => {
+    const newUser = req.body;
+    newUser.id = users.length;
+    users.push(newUser);
+    console.log('post hitted', req.body);
+    // res.send(JSON.stringify(newUser))
+    res.json(newUser);
+})
 app.get('/', (req, res) => {
     res.send('Hello from the otherside and');
 })
